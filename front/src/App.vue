@@ -9,7 +9,7 @@
 import HelloWorld from './components/HelloWorld.vue';
 import AppHeader from './components/common/AppHeader.vue';
 
-var a = 'hi1';
+var a = 'hi12';
 
 export default {
   name: 'app',
