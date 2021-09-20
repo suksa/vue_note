@@ -1,12 +1,36 @@
 <template>
   <header>
-    <router-link to="/login">로그인</router-link> |
-    <router-link to="/signup">회원가입</router-link>
+    <div>
+      <template v-if="isUserLogin">
+        <span>{{ $store.state.username }}</span>
+        <a href="javascript:;" @click="logoutUser">Logout</a>
+      </template>
+      <template v-else>
+        <router-link to="/login">로그인</router-link> |
+        <router-link to="/signup">회원가입</router-link>
+      </template>
+    </div>
   </header>
 </template>
 
 <script>
-export default {};
+export default {
+  methods: {
+    logoutUser() {
+      this.$store.commit('clearUsername');
+      this.$router.push('/login');
+    },
+  },
+  computed: {
+    isUserLogin() {
+      return this.$store.getters.isLogin;
+    },
+  },
+};
 </script>
 
-<style></style>
+<style scoped>
+header {
+  background: #eee;
+}
+</style>
