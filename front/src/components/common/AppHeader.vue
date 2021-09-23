@@ -1,6 +1,7 @@
 <template>
   <header>
     <div>
+      <router-link :to="logoLink"><b>쀼</b></router-link> |
       <template v-if="isUserLogin">
         <span>{{ $store.state.username }}</span>
         <a href="javascript:;" @click="logoutUser">Logout</a>
@@ -14,16 +15,23 @@
 </template>
 
 <script>
+import { deleteCookie } from '@/utils/cookies';
 export default {
-  methods: {
-    logoutUser() {
-      this.$store.commit('clearUsername');
-      this.$router.push('/login');
-    },
-  },
   computed: {
     isUserLogin() {
       return this.$store.getters.isLogin;
+    },
+    logoLink() {
+      return this.$store.getters.isLogin ? '/main' : '/login';
+    },
+  },
+  methods: {
+    logoutUser() {
+      this.$store.commit('clearUsername');
+      this.$store.commit('clearToken');
+      deleteCookie('til_auth');
+      deleteCookie('til_user');
+      this.$router.push('/login');
     },
   },
 };

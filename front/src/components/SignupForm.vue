@@ -3,6 +3,9 @@
     <div>
       <label for="username">id: </label>
       <input type="text" id="username" v-model="username" />
+      <p class="warning" v-if="!isUsernameValid && username">
+        이메일을 입력해 주세요
+      </p>
     </div>
     <div>
       <label for="password">pw: </label>
@@ -18,7 +21,8 @@
 </template>
 
 <script>
-import { registerUser } from '@/api/index';
+import { registerUser } from '@/api/auth';
+import { validateEmail } from '@/utils/validation';
 
 export default {
   data() {
@@ -47,6 +51,11 @@ export default {
       this.username = '';
       this.password = '';
       this.nickname = '';
+    },
+  },
+  computed: {
+    isUsernameValid() {
+      return validateEmail(this.username);
     },
   },
 };
